@@ -1,0 +1,77 @@
+<div class="container pagina-interna">
+  <h1 class="titulo-pagina">Seu carrinho</h1>
+
+  @if (cart.itens().length === 0) {
+    <app-estado-vazio icone="cart" titulo="Seu carrinho está vazio" texto="Escolha algo gostoso no cardápio.">
+      <a routerLink="/" fragment="cardapio" class="btn btn-primario">Ver cardápio</a>
+    </app-estado-vazio>
+  } @else {
+    <div class="colunas">
+      <section>
+        @for (item of cart.itens(); track item) {
+          <article class="card item">
+            <div class="item-foto"><app-foto [url]="item.imagemUrl" [nome]="item.nome" /></div>
+            <div class="item-info">
+              <h3>{{ item.nome }}</h3>
+              @if (item.observacao) { <small class="muted">Obs.: {{ item.observacao }}</small> }
+              <strong class="preco">{{ item.preco * item.quantidade | currency: 'BRL' }}</strong>
+            </div>
+            <div class="item-acoes">
+              <div class="stepper stepper-p">
+                <button type="button" (click)="cart.alterar(item, -1)" aria-label="Diminuir"><app-icone nome="minus" /></button>
+                <span>{{ item.quantidade }}</span>
+                <button type="button" (click)="cart.alterar(item, 1)" aria-label="Aumentar"><app-icone nome="plus" /></button>
+              </div>
+              <button type="button" class="btn-icone btn-icone-p" (click)="cart.remover(item)" aria-label="Remover"><app-icone nome="trash" /></button>
+            </div>
+          </article>
+        }
+      </section>
+
+      <aside class="lateral">
+        <div class="card">
+          <h3>Resumo</h3>
+          <div class="resumo-linha"><span>Itens</span><span>{{ cart.quantidade() }}</span></div>
+          <div class="resumo-linha resumo-total"><span>Total</span><strong>{{ cart.total() | currency: 'BRL' }}</strong></div>
+        </div>
+
+        @if (auth.logado()) {
+          <form class="card" (ngSubmit)="finalizar()" #f="ngForm">
+            <h3>Entrega e pagamento</h3>
+            <div class="campo">
+              <label for="endereco">Endereço de entrega</label>
+              <input id="endereco" name="endereco" required maxlength="300" [(ngModel)]="endereco" placeholder="Rua, número, bairro">
+            </div>
+            <div class="campo">
+              <label for="telefone">Telefone para contato</label>
+              <input id="telefone" name="telefone" required maxlength="30" [(ngModel)]="telefone" inputmode="tel" placeholder="(00) 00000-0000">
+            </div>
+
+            <div class="campo">
+              <span class="rotulo-grupo">Forma de pagamento</span>
+              <div class="opcoes">
+                @for (o of formas; track o.valor) {
+                  <button type="button" class="opcao" [class.ativa]="forma === o.valor" [attr.aria-pressed]="forma === o.valor" (click)="forma = o.valor">{{ o.rotulo }}</button>
+                }
+              </div>
+              <small class="muted">Pagamento simulado: é sempre aprovado.</small>
+            </div>
+
+            <button type="submit" class="btn btn-primario btn-bloco" [disabled]="enviando || f.invalid">
+              {{ enviando ? 'Enviando...' : 'Finalizar pedido · ' + (cart.total() | currency: 'BRL') }}
+            </button>
+          </form>
+        } @else {
+          <div class="card">
+            <h3>Quase lá!</h3>
+            <p class="muted">Entre ou crie sua conta para finalizar o pedido. Seu carrinho fica guardado.</p>
+            <div class="botoes-auth">
+              <a routerLink="/login" [queryParams]="{ voltar: '/carrinho' }" class="btn btn-escuro btn-bloco">Entrar</a>
+              <a routerLink="/cadastro" [queryParams]="{ voltar: '/carrinho' }" class="btn btn-claro btn-bloco">Criar conta</a>
+            </div>
+          </div>
+        }
+      </aside>
+    </div>
+  }
+</div>

@@ -1,0 +1,27 @@
+<footer class="rodape">
+  <div class="container colunas">
+    <div class="marca">
+      <app-logo [claro]="true" />
+      <p>Comida feita na hora na nossa cozinha e entregue na sua porta.</p>
+    </div>
+    <div>
+      <h4>Navegue</h4>
+      <a routerLink="/" fragment="cardapio">Cardápio</a>
+      @if (auth.logado()) {
+        @if (auth.funcionario()) { <a routerLink="/admin">Painel</a> }
+        @else { <a routerLink="/pedidos">Meus pedidos</a> }
+        <a routerLink="/perfil">Meu perfil</a>
+      } @else {
+        <a routerLink="/login">Entrar</a>
+        <a routerLink="/cadastro">Criar conta</a>
+      }
+    </div>
+    <div>
+      <h4>Pagamento</h4>
+      <p>Pix, cartão de crédito e cartão de débito.</p>
+    </div>
+  </div>
+  <div class="container base">
+    <span>© {{ ano }} Dark Kitchen. Todos os direitos reservados.</span>
+  </div>
+</footer>

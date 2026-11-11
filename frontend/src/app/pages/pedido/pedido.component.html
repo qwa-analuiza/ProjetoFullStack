@@ -1,0 +1,71 @@
+<div class="container pagina-interna">
+  <a routerLink="/pedidos" class="voltar"><app-icone nome="back" /> Meus pedidos</a>
+
+  @if (carregando) {
+    <div class="esqueleto esqueleto-grande"></div>
+  } @else if (!pedido) {
+    <app-estado-vazio icone="search" titulo="Pedido não encontrado">
+      <a routerLink="/pedidos" class="btn btn-primario">Meus pedidos</a>
+    </app-estado-vazio>
+  } @else {
+    <div class="cabecalho">
+      <div>
+        <h1 class="titulo-pagina">Pedido #{{ pedido.id }}</h1>
+        <small class="muted">Feito em {{ pedido.criadoEm | date: "dd/MM/yyyy 'às' HH:mm" }}</small>
+      </div>
+      <span class="selo selo-g" [attr.data-s]="pedido.status">{{ pedido.status | rotulo: 'status' }}</span>
+    </div>
+
+    <div class="colunas">
+      <section>
+        <div class="card">
+          <h3>Acompanhe</h3>
+          @if (pedido.status === 'CANCELADO') {
+            <div class="alerta alerta-erro">Este pedido foi cancelado.</div>
+          } @else {
+            <ol class="linha-tempo">
+              @for (etapa of etapas; track etapa; let i = $index) {
+                <li [class.feita]="i < indice" [class.atual]="i === indice">
+                  <span class="marca">@if (i < indice) { <app-icone nome="check" /> }</span>
+                  <span>{{ etapa | rotulo: 'status' }}</span>
+                </li>
+              }
+            </ol>
+          }
+        </div>
+
+        <div class="card">
+          <h3>Itens</h3>
+          @for (i of pedido.itens; track $index) {
+            <div class="resumo-linha">
+              <span>{{ i.quantidade }}× {{ i.prato }}
+                @if (i.observacao) { <small class="muted"><br>Obs.: {{ i.observacao }}</small> }
+              </span>
+              <span>{{ i.subtotal | currency: 'BRL' }}</span>
+            </div>
+          }
+          <div class="resumo-linha resumo-total"><span>Total</span><strong>{{ pedido.total | currency: 'BRL' }}</strong></div>
+        </div>
+      </section>
+
+      <aside>
+        <div class="card">
+          <h3>Entrega</h3>
+          <p>{{ pedido.enderecoEntrega }}</p>
+          <small class="muted">Contato: {{ pedido.telefoneContato }}</small>
+          @if (pedido.entregador) { <p class="muted">Motoboy: {{ pedido.entregador }}</p> }
+        </div>
+        <div class="card">
+          <h3>Pagamento</h3>
+          <p>{{ pedido.formaPagamento | rotulo: 'pagamento' }}
+            <span class="selo" [attr.data-s]="pedido.pagamentoAprovado ? 'ENTREGUE' : 'RECEBIDO'">{{ pedido.pagamentoAprovado ? 'Aprovado' : 'Pendente' }}</span>
+          </p>
+          @if (pedido.codigoPagamento) { <small class="muted">Código: {{ pedido.codigoPagamento }}</small> }
+        </div>
+        @if (pedido.status === 'RECEBIDO') {
+          <button type="button" class="btn btn-perigo btn-bloco" (click)="cancelar()">Cancelar pedido</button>
+        }
+      </aside>
+    </div>
+  }
+</div>

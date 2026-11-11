@@ -1,0 +1,17 @@
+:host { display: block; }
+.filtros { display: flex; gap: 8px; overflow-x: auto; padding: 2px 2px 12px; scrollbar-width: none; }
+.filtros::-webkit-scrollbar { display: none; }
+.pilula { flex: none; min-height: 42px; padding: 0 18px; border-radius: var(--raio-pilula); border: 1px solid var(--borda); background: var(--papel); color: var(--tinta); font-weight: 700; font-size: .9rem; cursor: pointer; }
+.pilula.ativa { background: var(--ambar); border-color: var(--ambar); }
+.grade-fila { display: grid; gap: 14px; grid-template-columns: repeat(auto-fill, minmax(min(100%, 340px), 1fr)); align-items: start; }
+.pedido { display: flex; flex-direction: column; gap: 10px; margin-bottom: 0; border-radius: var(--raio-g); }
+.pedido header, .pedido footer { display: flex; align-items: center; justify-content: space-between; gap: 10px; flex-wrap: wrap; }
+.resumo-cozinha { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; margin-bottom: 16px; }
+.resumo-cozinha div { display: flex; flex-direction: column; gap: 4px; padding: 14px; border: 1px solid var(--borda); border-radius: var(--raio-p); background: var(--papel); }
+.resumo-cozinha strong { font-size: 1.4rem; }
+.resumo-cozinha span { color: var(--tinta-2); font-size: .82rem; }
+.estado-cozinha { display: inline-flex; margin-left: 8px; padding: 3px 8px; border-radius: var(--raio-pilula); font-size: .75rem; font-weight: 700; }
+.estado-cozinha[data-situacao="aguardando"] { background: var(--ambar-suave); color: var(--ambar-texto); }
+.estado-cozinha[data-situacao="na-cozinha"], .estado-cozinha[data-situacao="cancelado"] { background: var(--erro-bg); color: var(--erro); }
+.estado-cozinha[data-situacao="pronto"], .estado-cozinha[data-situacao="finalizado"] { background: var(--ok-bg); color: var(--ok); }
+@media (max-width: 380px) { .resumo-cozinha { grid-template-columns: 1fr; } }

@@ -1,0 +1,13 @@
+<section class="chamada">
+  <div class="container conteudo">
+    <div class="texto">
+      <span class="eyebrow">Seu pedido está esperando</span>
+      <h2>Peça agora e receba quentinho.</h2>
+      @if (!auth.logado()) { <p>Crie sua conta, salve seu endereço e acompanhe cada pedido em tempo real.</p> }
+    </div>
+    <div class="botoes">
+      <a routerLink="/" fragment="cardapio" class="btn btn-primario">Pedir agora <app-icone nome="arrow" /></a>
+      @if (!auth.logado()) { <a routerLink="/cadastro" class="btn btn-contorno-claro">Criar conta</a> }
+    </div>
+  </div>
+</section>

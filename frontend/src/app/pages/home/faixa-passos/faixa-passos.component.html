@@ -1,0 +1,7 @@
+<section class="faixa" id="como-funciona" aria-label="Como funciona">
+  <ol class="container passos">
+    @for (p of passos; track p.n) {
+      <li><span class="numero">{{ p.n }}</span><span class="titulo">{{ p.titulo }}</span></li>
+    }
+  </ol>
+</section>

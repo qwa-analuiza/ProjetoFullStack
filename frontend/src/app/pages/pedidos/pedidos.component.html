@@ -1,0 +1,27 @@
+<div class="container pagina-interna">
+  <h1 class="titulo-pagina">Meus pedidos</h1>
+
+  @if (carregando) {
+    <div class="esqueleto esqueleto-grande"></div>
+  } @else if (pedidos.length === 0) {
+    <app-estado-vazio icone="receipt" titulo="Você ainda não fez pedidos" texto="Quando fizer, eles aparecem aqui.">
+      <a routerLink="/" fragment="cardapio" class="btn btn-primario">Ver cardápio</a>
+    </app-estado-vazio>
+  } @else {
+    <div class="lista-cards">
+      @for (p of pedidos; track p.id) {
+        <a class="card pedido" [routerLink]="['/pedidos', p.id]">
+          <div class="pedido-info">
+            <strong>Pedido #{{ p.id }}</strong>
+            <small class="muted">{{ p.criadoEm | date: "dd/MM/yyyy 'às' HH:mm" }}</small>
+            <small class="muted resumo">{{ resumo(p) }}</small>
+          </div>
+          <div class="pedido-lado">
+            <span class="selo" [attr.data-s]="p.status">{{ p.status | rotulo: 'status' }}</span>
+            <strong class="preco">{{ p.total | currency: 'BRL' }}</strong>
+          </div>
+        </a>
+      }
+    </div>
+  }
+</div>

@@ -1,0 +1,9 @@
+.rodape { background: var(--tinta); color: rgba(255, 255, 255, .72); }
+.colunas { display: grid; gap: 32px; grid-template-columns: 1fr; padding-block: clamp(36px, 6vw, 56px) 32px; border-top: 1px solid rgba(255, 255, 255, .12); }
+.marca { display: flex; flex-direction: column; gap: 16px; max-width: 32ch; }
+h4 { color: var(--branco); font-size: .95rem; letter-spacing: -.01em; margin-bottom: 14px; }
+a { display: block; color: rgba(255, 255, 255, .72); padding: 4px 0; }
+a:hover { color: var(--ambar); }
+p { font-size: .92rem; }
+.base { padding-block: 22px 28px; border-top: 1px solid rgba(255, 255, 255, .12); font-size: .8rem; color: rgba(255, 255, 255, .5); }
+@media (min-width: 700px) { .colunas { grid-template-columns: 1.4fr 1fr 1fr; gap: 48px; } }

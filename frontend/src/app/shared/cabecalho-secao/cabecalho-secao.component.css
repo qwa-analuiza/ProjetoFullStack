@@ -1,0 +1,3 @@
+.barra { display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; margin: 6px 0 16px; }
+h2 { font-size: clamp(1.5rem, 1rem + 1.8vw, 2.1rem); letter-spacing: -.04em; display: flex; align-items: baseline; gap: 10px; }
+small { font-family: var(--fonte); font-size: .9rem; font-weight: 600; color: var(--tinta-2); letter-spacing: 0; }

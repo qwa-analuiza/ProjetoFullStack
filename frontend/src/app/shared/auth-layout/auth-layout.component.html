@@ -1,0 +1,25 @@
+<div class="auth">
+  <aside class="painel">
+    <app-logo [claro]="true" />
+    <div class="painel-texto">
+      <span class="eyebrow">Dark Kitchen</span>
+      <h2>Peça, acompanhe e receba sem sair de casa.</h2>
+      <p>Salve seu endereço, repita seus favoritos e veja cada etapa do pedido em tempo real.</p>
+    </div>
+  </aside>
+
+  <section class="formulario">
+    <div class="interno">
+      <span class="eyebrow">{{ eyebrow }}</span>
+      <h1>{{ titulo }}</h1>
+      @if (subtitulo) { <p class="sub">{{ subtitulo }}</p> }
+
+      <nav class="abas" aria-label="Entrar ou criar conta">
+        <a routerLink="/login" [queryParams]="rota.snapshot.queryParams" routerLinkActive="ativa">Entrar</a>
+        <a routerLink="/cadastro" [queryParams]="rota.snapshot.queryParams" routerLinkActive="ativa">Criar conta</a>
+      </nav>
+
+      <ng-content />
+    </div>
+  </section>
+</div>

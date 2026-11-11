@@ -1,0 +1,32 @@
+<section class="hero">
+  <div class="container grade">
+    <div class="texto">
+      <span class="eyebrow eyebrow-linha">Cozinha de delivery</span>
+      <h1>Sabor de restaurante, <em>entregue na sua porta.</em></h1>
+      <p class="lead">Pratos preparados na hora na nossa cozinha, sem salão e sem fila. Você escolhe, a gente cozinha e leva até você.</p>
+
+      <div class="botoes">
+        <a routerLink="/" fragment="cardapio" class="btn btn-primario">Ver cardápio <app-icone nome="arrow" /></a>
+        <a routerLink="/" fragment="como-funciona" class="btn btn-claro">Como funciona</a>
+      </div>
+
+      @if (total > 0) {
+        <div class="numeros">
+          <div class="numero"><strong>{{ total }}</strong><span>{{ total === 1 ? 'prato no cardápio' : 'pratos no cardápio' }}</span></div>
+          <div class="numero"><span>Acompanhe cada etapa do pedido em tempo real.</span></div>
+        </div>
+      }
+    </div>
+
+    <div class="visual">
+      <div class="foto-principal">
+        <app-foto [url]="destaque?.imagemUrl" [nome]="destaque?.nome" />
+        <p class="legenda">{{ destaque ? destaque.nome + ': feito na hora, direto da cozinha.' : 'Feito na hora, direto da cozinha.' }}</p>
+      </div>
+      <span class="selo-redondo">Feito<br>na hora</span>
+      @if (segundo?.imagemUrl) {
+        <div class="foto-menor"><app-foto [url]="segundo?.imagemUrl" [nome]="segundo?.nome" /></div>
+      }
+    </div>
+  </div>
+</section>

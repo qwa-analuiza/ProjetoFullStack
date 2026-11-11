@@ -1,0 +1,4 @@
+:host { display: block; }
+.compra { display: flex; flex-direction: column; gap: 10px; border-radius: var(--raio-g); }
+.compra header, .compra footer { display: flex; align-items: center; justify-content: space-between; gap: 10px; flex-wrap: wrap; }
+.espaco-baixo { margin-bottom: 14px; }

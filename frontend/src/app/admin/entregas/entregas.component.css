@@ -1,0 +1,11 @@
+:host { display: block; }
+.resumo { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; margin-bottom: 8px; }
+.resumo div { display: flex; flex-direction: column; gap: 4px; padding: 14px; border: 1px solid var(--borda); border-radius: var(--raio-p); background: var(--papel); }
+.resumo strong { font-size: 1.4rem; }
+.resumo span { color: var(--tinta-2); font-size: .82rem; }
+.grade { display: grid; gap: 14px; grid-template-columns: repeat(auto-fill, minmax(min(100%, 340px), 1fr)); align-items: start; }
+.pedido { display: flex; flex-direction: column; gap: 10px; margin-bottom: 0; border-radius: var(--raio-g); }
+.pedido header, .pedido footer { display: flex; align-items: center; justify-content: space-between; gap: 10px; flex-wrap: wrap; }
+.endereco { font-weight: 700; }
+.atalhos { display: flex; gap: 8px; flex-wrap: wrap; }
+@media (max-width: 380px) { .resumo { grid-template-columns: 1fr; } }

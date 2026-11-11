@@ -1,0 +1,45 @@
+<app-cabecalho-secao titulo="Ingredientes" [contagem]="lista.length">
+  <button type="button" class="btn btn-primario btn-sm" (click)="novo()"><app-icone nome="plus" /> Novo</button>
+</app-cabecalho-secao>
+
+@if (carregando) { <div class="esqueleto esqueleto-grande"></div> }
+@else if (lista.length === 0) {
+  <app-estado-vazio icone="basket" titulo="Nenhum ingrediente" texto="Cadastre o primeiro para montar as fichas técnicas." />
+} @else {
+  <div class="lista-cards">
+    @for (i of lista; track i.id) {
+      <div class="card linha">
+        <div class="linha-info">
+          <strong>{{ i.nome }}</strong>
+          <small class="muted">Estoque: {{ i.estoqueAtual | number: '1.0-3' }} {{ i.unidade }} · mínimo {{ i.estoqueMinimo | number: '1.0-3' }} · custo {{ i.custoUnitario | currency: 'BRL' : 'symbol' : '1.2-4' }}/{{ i.unidade }}</small>
+        </div>
+        @if (i.estoqueBaixo) { <span class="selo" data-s="CANCELADO">Estoque baixo</span> }
+        <div class="acoes">
+          <button type="button" class="btn-icone btn-icone-p" (click)="editar(i)" aria-label="Editar"><app-icone nome="edit" /></button>
+          <button type="button" class="btn-icone btn-icone-p" (click)="desativar(i)" aria-label="Desativar"><app-icone nome="trash" /></button>
+        </div>
+      </div>
+    }
+  </div>
+}
+
+@if (modal) {
+  <app-modal [titulo]="editandoId ? 'Editar ingrediente' : 'Novo ingrediente'" (fechar)="modal = false">
+    <form (ngSubmit)="salvar()" #f="ngForm">
+      <div class="campo"><label for="nome">Nome</label>
+        <input id="nome" name="nome" required maxlength="255" [(ngModel)]="form.nome"></div>
+      <div class="grade-2">
+        <div class="campo"><label for="unidade">Unidade</label>
+          <select id="unidade" name="unidade" [(ngModel)]="form.unidade">
+            @for (u of unidades; track u) { <option [value]="u">{{ u }}</option> }
+          </select></div>
+        <div class="campo"><label for="minimo">Estoque mínimo</label>
+          <input id="minimo" name="minimo" type="number" min="0" step="any" required [(ngModel)]="form.estoqueMinimo"></div>
+      </div>
+      <div class="campo"><label for="custo">Custo por unidade (R$)</label>
+        <input id="custo" name="custo" type="number" min="0" step="any" required [(ngModel)]="form.custoUnitario">
+        <small class="muted">O custo é atualizado sozinho a cada compra recebida. O estoque entra em Estoque → Nova entrada.</small></div>
+      <button type="submit" class="btn btn-primario btn-bloco" [disabled]="salvando || f.invalid">{{ salvando ? 'Salvando...' : 'Salvar' }}</button>
+    </form>
+  </app-modal>
+}

@@ -1,0 +1,5 @@
+<div class="toasts" aria-live="polite">
+  @for (m of aviso.mensagens(); track m.id) {
+    <div class="toast" [class.erro]="m.tipo === 'erro'">{{ m.texto }}</div>
+  }
+</div>

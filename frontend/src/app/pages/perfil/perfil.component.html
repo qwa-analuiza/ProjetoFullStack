@@ -1,0 +1,27 @@
+<div class="container pagina-interna">
+  <h1 class="titulo-pagina">Meu perfil</h1>
+  @if (auth.usuario(); as u) {
+    <div class="caixa">
+      <div class="card topo">
+        <div class="avatar">{{ u.nome.charAt(0).toUpperCase() }}</div>
+        <div>
+          <h3>{{ u.nome }}</h3>
+          <span class="chip">{{ u.perfil | rotulo: 'perfil' }}</span>
+        </div>
+      </div>
+      <div class="card">
+        <div class="dado"><small class="muted">E-mail</small><span>{{ u.email }}</span></div>
+        @if (u.telefone) { <div class="dado"><small class="muted">Telefone</small><span>{{ u.telefone }}</span></div> }
+        @if (u.endereco) { <div class="dado"><small class="muted">Endereço</small><span>{{ u.endereco }}</span></div> }
+      </div>
+      <div class="botoes">
+        @if (!auth.funcionario()) {
+          <a routerLink="/pedidos" class="btn btn-claro btn-bloco"><app-icone nome="receipt" /> Meus pedidos</a>        }
+        @if (auth.funcionario()) {
+          <a routerLink="/admin" class="btn btn-claro btn-bloco"><app-icone nome="chef" /> Abrir painel</a>
+        }
+        <button type="button" class="btn btn-fantasma btn-bloco" (click)="auth.sair()"><app-icone nome="logout" /> Sair</button>
+      </div>
+    </div>
+  }
+</div>

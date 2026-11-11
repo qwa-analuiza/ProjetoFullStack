@@ -1,0 +1,15 @@
+.topo { position: sticky; top: 0; z-index: 30; background: rgba(243, 234, 219, .88); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border-bottom: 1px solid var(--borda); }
+.linha-topo { display: flex; align-items: center; justify-content: space-between; gap: 16px; min-height: var(--altura-topo); }
+.menu { display: none; gap: 8px; margin-left: auto; margin-right: 8px; }
+.menu a { padding: 10px 16px; border-radius: var(--raio-pilula); color: var(--tinta); font-weight: 600; font-size: .95rem; }
+.menu a:hover, .menu a.ativo { background: rgba(27, 27, 21, .07); }
+.acoes-topo { display: flex; align-items: center; gap: 10px; }
+.perfil { display: inline-flex; align-items: center; gap: 10px; color: var(--tinta); font-weight: 700; font-size: .9rem; }
+.iniciais { display: grid; place-items: center; width: 40px; height: 40px; border-radius: 50%; background: var(--ambar); font-size: .75rem; font-weight: 800; }
+.perfil-texto { display: none; }
+.carrinho { position: relative; display: grid; place-items: center; width: 48px; height: 48px; border-radius: 50%; background: var(--tinta); color: var(--branco); }
+.carrinho:hover { background: #33332A; }
+.badge { position: absolute; top: -4px; right: -4px; min-width: 22px; height: 22px; padding: 0 6px; display: grid; place-items: center; border-radius: var(--raio-pilula);
+  background: var(--ambar); color: var(--tinta); font-size: .72rem; font-weight: 800; border: 2px solid var(--creme); }
+@media (min-width: 560px) { .perfil-texto { display: inline; } }
+@media (min-width: 900px) { .menu { display: flex; } }

@@ -1,0 +1,14 @@
+:host { display: block; }
+.card-prato { height: 100%; display: flex; flex-direction: column; padding: 12px; background: var(--branco); border-radius: var(--raio-g); box-shadow: var(--sombra); }
+.foto-link { position: relative; display: block; }
+.foto-caixa { aspect-ratio: 8 / 5; border-radius: 22px; overflow: hidden; }
+.etiqueta { position: absolute; top: 12px; left: 12px; padding: 5px 12px; border-radius: var(--raio-pilula); background: var(--ambar); color: var(--tinta);
+  font-size: .66rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; }
+.corpo { flex: 1; display: flex; flex-direction: column; gap: 10px; padding: 18px 10px 10px; }
+.titulo-linha { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; }
+h3 { font-size: 1.3rem; letter-spacing: -.04em; }
+h3 a { color: var(--tinta); }
+h3 a:hover { color: var(--ambar-texto); }
+.preco { font-size: 1.15rem; white-space: nowrap; }
+.descricao { color: var(--tinta-2); font-size: .92rem; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+.btn { margin-top: auto; }

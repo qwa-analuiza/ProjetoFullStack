@@ -1,0 +1,36 @@
+.btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 10px; min-height: 50px; padding: 0 26px;
+  border: 1px solid transparent; border-radius: var(--raio-pilula); font: inherit; font-weight: 700; font-size: .95rem;
+  cursor: pointer; text-align: center; color: var(--tinta); transition: transform .12s, box-shadow .15s, background .15s, border-color .15s;
+}
+.btn:active:not(:disabled) { transform: scale(.98); }
+.btn:disabled { opacity: .5; cursor: not-allowed; }
+.btn-primario { background: var(--ambar); color: var(--tinta); box-shadow: 0 12px 26px rgba(232, 163, 23, .36); }
+.btn-primario:hover:not(:disabled) { background: var(--ambar-hover); }
+.btn-escuro { background: var(--tinta); color: var(--branco); }
+.btn-escuro:hover:not(:disabled) { background: #33332A; }
+.btn-claro { background: var(--papel); border-color: var(--borda); }
+.btn-claro:hover { border-color: var(--borda-forte); }
+.btn-suave { background: var(--ambar-suave); color: var(--ambar-texto); }
+.btn-suave:hover:not(:disabled) { background: #EFDDAE; }
+.btn-fantasma { background: transparent; border-color: var(--borda-forte); }
+.btn-fantasma:hover:not(:disabled) { background: rgba(27, 27, 21, .05); }
+.btn-contorno-claro { background: transparent; color: var(--branco); border-color: rgba(255, 255, 255, .32); }
+.btn-contorno-claro:hover { background: rgba(255, 255, 255, .08); }
+.btn-perigo { background: var(--erro-bg); color: var(--erro); }
+.btn-bloco { width: 100%; }
+.btn-sm { min-height: 40px; padding: 0 18px; font-size: .88rem; }
+
+.btn-icone {
+  position: relative; display: inline-grid; place-items: center; flex: none; width: 46px; height: 46px; border-radius: 50%;
+  border: 1px solid var(--borda); background: var(--branco); color: var(--tinta); cursor: pointer; transition: background .15s;
+}
+.btn-icone:hover:not(:disabled) { background: var(--ambar-suave); }
+.btn-icone:disabled { opacity: .4; cursor: not-allowed; }
+.btn-icone-p { width: 38px; height: 38px; }
+
+.stepper { display: inline-flex; align-items: center; gap: 4px; padding: 4px; background: var(--branco); border: 1px solid var(--borda); border-radius: var(--raio-pilula); }
+.stepper button { display: grid; place-items: center; width: 40px; height: 40px; border: 0; border-radius: 50%; background: var(--ambar-suave); color: var(--ambar-texto); cursor: pointer; }
+.stepper button:hover { background: #EFDDAE; }
+.stepper span { min-width: 30px; text-align: center; font-weight: 700; }
+.stepper-p button { width: 32px; height: 32px; }

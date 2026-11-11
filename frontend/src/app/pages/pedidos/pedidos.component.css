@@ -1,0 +1,7 @@
+:host { display: block; }
+.pedido { display: flex; align-items: center; justify-content: space-between; gap: 14px; color: var(--tinta); border-radius: var(--raio-g); transition: box-shadow .15s; }
+.pedido:hover { box-shadow: var(--sombra-g); }
+.pedido-info { display: flex; flex-direction: column; gap: 3px; min-width: 0; }
+.pedido-info strong { font-family: var(--fonte-titulo); font-size: 1.1rem; letter-spacing: -.03em; }
+.resumo { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.pedido-lado { display: flex; flex-direction: column; align-items: flex-end; gap: 8px; flex: none; }

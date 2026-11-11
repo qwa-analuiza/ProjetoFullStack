@@ -1,0 +1,17 @@
+/* Listas e linhas usadas em várias telas do cliente e do painel */
+.lista-cards { display: grid; gap: 12px; grid-template-columns: 1fr; }
+.lista-cards .card { margin-bottom: 0; }
+@media (min-width: 900px) { .lista-cards { grid-template-columns: 1fr 1fr; } }
+
+.linha { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; padding: 14px 18px; }
+.linha.inativo { opacity: .55; }
+.linha-info { flex: 1; min-width: 180px; display: flex; flex-direction: column; gap: 2px; }
+.acoes { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+
+.resumo-linha { display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; padding: 10px 0; border-bottom: 1px solid var(--borda); }
+.resumo-total { border-bottom: 0; font-size: 1.15rem; padding-top: 14px; }
+.resumo-total strong { color: var(--ambar-texto); font-family: var(--fonte-titulo); }
+
+.itens-fila { margin: 0; padding-left: 18px; display: flex; flex-direction: column; gap: 2px; }
+.dado { display: flex; flex-direction: column; padding: 10px 0; border-bottom: 1px solid var(--borda); }
+.dado:last-child { border-bottom: 0; }

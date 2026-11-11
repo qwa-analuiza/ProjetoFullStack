@@ -1,0 +1,5 @@
+<app-hero [destaque]="destaque" [segundo]="segundo" [total]="pratos.length" />
+<app-faixa-passos />
+<app-cardapio [pratos]="pratos" [carregando]="carregando" [erro]="erro"
+  [podeEditar]="podeEditarCardapio" (recarregar)="carregar()" />
+<app-chamada-final />

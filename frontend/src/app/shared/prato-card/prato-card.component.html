@@ -1,0 +1,18 @@
+<article class="card-prato">
+  <a class="foto-link" [routerLink]="['/prato', prato.id]" [attr.aria-label]="'Ver detalhes de ' + prato.nome">
+    <div class="foto-caixa"><app-foto [url]="prato.imagemUrl" [nome]="prato.nome" /></div>
+    <span class="etiqueta">{{ prato.categoria || 'Prato' }}</span>
+  </a>
+  <div class="corpo">
+    <div class="titulo-linha">
+      <h3><a [routerLink]="['/prato', prato.id]">{{ prato.nome }}</a></h3>
+      <strong class="preco">{{ prato.preco | currency: 'BRL' }}</strong>
+    </div>
+    <p class="descricao">{{ prato.descricao || 'Preparado na hora, com ingredientes selecionados.' }}</p>
+    @if (!auth.funcionario()) {
+      <button type="button" class="btn btn-suave btn-bloco" (click)="adicionar()">
+        Adicionar ao carrinho <app-icone nome="plus" />
+      </button>
+    }
+  </div>
+</article>

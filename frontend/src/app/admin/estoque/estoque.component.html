@@ -1,0 +1,58 @@
+<app-cabecalho-secao titulo="Estoque">
+  <button type="button" class="btn btn-primario btn-sm" (click)="abrirEntrada()"><app-icone nome="plus" /> Nova entrada</button>
+</app-cabecalho-secao>
+
+@if (carregando) { <div class="esqueleto esqueleto-grande"></div> }
+@else {
+  @if (alertas && (alertas.estoqueBaixo.length || alertas.lotesVencendoOuVencidos.length)) {
+    <div class="alerta alerta-aviso">
+      <strong>Atenção</strong>
+      @for (i of alertas.estoqueBaixo; track i.id) {
+        <div>Estoque baixo: {{ i.nome }} ({{ i.estoqueAtual | number: '1.0-3' }} {{ i.unidade }}, mínimo {{ i.estoqueMinimo | number: '1.0-3' }})</div>
+      }
+      @for (l of alertas.lotesVencendoOuVencidos; track l.id) {
+        <div>{{ l.vencido ? 'Vencido' : 'Vence em breve' }}: {{ l.ingrediente }} — lote #{{ l.id }} ({{ l.validade | date: 'dd/MM/yyyy' }})</div>
+      }
+    </div>
+  }
+
+  <h3 class="subtitulo">Lotes em estoque</h3>
+  @if (lotes.length === 0) {
+    <app-estado-vazio icone="box" titulo="Estoque vazio" texto="Registre uma entrada ou receba uma compra." />
+  } @else {
+    <div class="lista-cards">
+      @for (l of lotes; track l.id) {
+        <div class="card linha">
+          <div class="linha-info">
+            <strong>{{ l.ingrediente }} <small class="muted">lote #{{ l.id }}</small></strong>
+            <small class="muted">{{ l.quantidadeAtual | number: '1.0-3' }} {{ l.unidade }} · {{ l.custoUnitario | currency: 'BRL' : 'symbol' : '1.2-4' }}/{{ l.unidade }} ·
+              {{ l.validade ? 'validade ' + (l.validade | date: 'dd/MM/yyyy') : 'sem validade' }}</small>
+          </div>
+          @if (l.vencido) { <span class="selo" data-s="CANCELADO">Vencido</span> }
+          <button type="button" class="btn btn-fantasma btn-sm" (click)="descartar(l)">Descartar</button>
+        </div>
+      }
+    </div>
+  }
+}
+
+@if (modal) {
+  <app-modal titulo="Nova entrada de estoque" (fechar)="modal = false">
+    <form (ngSubmit)="salvar()" #f="ngForm">
+      <div class="campo"><label for="ing">Ingrediente</label>
+        <select id="ing" name="ing" required [ngModel]="form.ingredienteId" (ngModelChange)="escolher($event)">
+          <option [ngValue]="null" disabled>Selecione</option>
+          @for (i of ingredientes; track i.id) { <option [ngValue]="i.id">{{ i.nome }} ({{ i.unidade }})</option> }
+        </select></div>
+      <div class="grade-2">
+        <div class="campo"><label for="qtd">Quantidade</label>
+          <input id="qtd" name="qtd" type="number" min="0.001" step="any" required [(ngModel)]="form.quantidade"></div>
+        <div class="campo"><label for="custo">Custo unitário (R$)</label>
+          <input id="custo" name="custo" type="number" min="0" step="any" required [(ngModel)]="form.custoUnitario"></div>
+      </div>
+      <div class="campo"><label for="validade">Validade (opcional)</label>
+        <input id="validade" name="validade" type="date" [(ngModel)]="form.validade"></div>
+      <button type="submit" class="btn btn-primario btn-bloco" [disabled]="salvando || f.invalid">{{ salvando ? 'Salvando...' : 'Registrar entrada' }}</button>
+    </form>
+  </app-modal>
+}

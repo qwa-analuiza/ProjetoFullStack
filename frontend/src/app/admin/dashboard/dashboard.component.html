@@ -1,0 +1,53 @@
+@if (carregando) {
+  <div class="esqueleto esqueleto-grande"></div>
+} @else if (d) {
+  @if (passosPendentes) {
+    <section class="card passos" aria-label="Primeiros passos">
+      <h3>Primeiros passos</h3>
+      <ol>
+        @for (p of passos; track p.titulo) {
+          <li [class.feito]="p.feito">
+            <span class="marca">@if (p.feito) { <app-icone nome="check" /> }</span>
+            <div>
+              <a [routerLink]="p.link" [fragment]="p.fragmento">{{ p.titulo }}</a>
+              <small class="muted">{{ p.texto }}</small>
+            </div>
+          </li>
+        }
+      </ol>
+    </section>
+  }
+
+  <div class="indicadores">
+    <div class="card indicador"><small>Pedidos hoje</small><strong>{{ d.pedidosHoje }}</strong></div>
+    <div class="card indicador"><small>Faturamento</small><strong>{{ d.faturamentoHoje | currency: 'BRL' }}</strong></div>
+    <div class="card indicador"><small>Custo</small><strong>{{ d.custoHoje | currency: 'BRL' }}</strong></div>
+    <div class="card indicador destaque"><small>Lucro bruto</small><strong>{{ d.lucroBrutoHoje | currency: 'BRL' }}</strong></div>
+  </div>
+
+  <div class="blocos">
+    <div class="card">
+      <h3>Pedidos por status</h3>
+      @for (s of statusLista; track s[0]) {
+        <div class="resumo-linha">
+          <span class="selo" [attr.data-s]="s[0]">{{ s[0] | rotulo: 'status' }}</span><strong>{{ s[1] }}</strong>
+        </div>
+      } @empty { <p class="muted">Nenhum pedido hoje.</p> }
+    </div>
+
+    <div class="card">
+      <h3>Mais vendidos hoje</h3>
+      @for (m of d.maisVendidosHoje; track m.prato) {
+        <div class="resumo-linha"><span>{{ m.prato }}</span><strong>{{ m.quantidade }}</strong></div>
+      } @empty { <p class="muted">Sem vendas hoje.</p> }
+    </div>
+
+    <div class="card">
+      <h3>Alertas de estoque</h3>
+      <div class="resumo-linha"><span>Ingredientes com estoque baixo</span>
+        <span class="selo" [attr.data-s]="d.ingredientesComEstoqueBaixo ? 'CANCELADO' : 'ENTREGUE'">{{ d.ingredientesComEstoqueBaixo }}</span></div>
+      <div class="resumo-linha"><span>Lotes vencidos ou vencendo (3 dias)</span>
+        <span class="selo" [attr.data-s]="d.lotesVencendoOuVencidos ? 'CANCELADO' : 'ENTREGUE'">{{ d.lotesVencendoOuVencidos }}</span></div>
+    </div>
+  </div>
+}

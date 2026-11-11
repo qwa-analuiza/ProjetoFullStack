@@ -1,0 +1,26 @@
+<nav class="nav" aria-label="Navegação principal">
+  <a routerLink="/" routerLinkActive="ativo" [routerLinkActiveOptions]="{ exact: true }" class="item">
+    <app-icone nome="home" /><span>Início</span>
+  </a>
+  @if (auth.funcionario()) {
+    <a routerLink="/" fragment="cardapio" class="item">
+      <app-icone nome="utensils" /><span>Cardápio</span>
+    </a>
+  } @else {
+    <a routerLink="/pedidos" routerLinkActive="ativo" class="item">
+      <app-icone nome="receipt" /><span>Pedidos</span>
+    </a>
+    <a routerLink="/carrinho" routerLinkActive="ativo" class="item carrinho">
+      <app-icone nome="cart" /><span>Carrinho</span>
+      @if (cart.quantidade() > 0) { <span class="badge">{{ cart.quantidade() }}</span> }
+    </a>
+  }
+  @if (auth.funcionario()) {
+    <a routerLink="/admin" routerLinkActive="ativo" class="item"><app-icone nome="chef" /><span>{{ auth.rotuloPainel() }}</span></a>
+  }
+  @if (auth.logado()) {
+    <a routerLink="/perfil" routerLinkActive="ativo" class="item"><app-icone nome="user" /><span>Perfil</span></a>
+  } @else {
+    <a routerLink="/login" routerLinkActive="ativo" class="item"><app-icone nome="user" /><span>Entrar</span></a>
+  }
+</nav>

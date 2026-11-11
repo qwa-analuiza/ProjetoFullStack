@@ -1,0 +1,9 @@
+<div class="fundo" (click)="cliqueNoFundo($event)">
+  <div class="modal" role="dialog" aria-modal="true" [attr.aria-label]="titulo">
+    <header class="topo">
+      <h3>{{ titulo }}</h3>
+      <button type="button" class="btn-icone" (click)="fechar.emit()" aria-label="Fechar"><app-icone nome="close" /></button>
+    </header>
+    <div class="corpo"><ng-content /></div>
+  </div>
+</div>

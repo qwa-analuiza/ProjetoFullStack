@@ -1,0 +1,14 @@
+<div class="container pagina-interna">
+  <h1 class="titulo-pagina">{{ auth.rotuloPainel() }}</h1>
+  <nav class="abas" aria-label="Seções do painel">
+    @for (aba of abas; track aba.caminho) {
+      <a [routerLink]="['/admin', aba.caminho]" routerLinkActive="ativa" class="aba">
+        {{ auth.perfil() === 'COZINHEIRO' && aba.caminho === 'pedidos' ? 'Cozinha' : aba.rotulo }}
+      </a>
+    }
+    @if (auth.perfil() === 'ADMIN') {
+      <a routerLink="/" fragment="cardapio" class="aba">Cardápio</a>
+    }
+  </nav>
+  <router-outlet />
+</div>

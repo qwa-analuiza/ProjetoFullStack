@@ -1,0 +1,7 @@
+:host { display: block; }
+.abas { display: flex; gap: 8px; overflow-x: auto; padding: 4px var(--gutter) 14px; margin-inline: calc(var(--gutter) * -1); scrollbar-width: none; }
+.abas::-webkit-scrollbar { display: none; }
+.aba { flex: none; display: grid; place-items: center; min-height: 44px; padding: 0 20px; border-radius: var(--raio-pilula); font-weight: 700; color: var(--tinta); background: var(--papel); border: 1px solid var(--borda); }
+.aba:hover { background: var(--branco); }
+.aba.ativa { background: var(--tinta); color: var(--branco); border-color: var(--tinta); }
+@media (min-width: 900px) { .abas { flex-wrap: wrap; overflow: visible; margin-inline: 0; padding-inline: 2px; } }

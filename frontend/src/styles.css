@@ -1,0 +1,8 @@
+/* Design system global. Cada arquivo cuida de uma parte; o que é de um componente fica na pasta dele. */
+@import './styles/variaveis.css';
+@import './styles/base.css';
+@import './styles/botoes.css';
+@import './styles/formularios.css';
+@import './styles/cartoes.css';
+@import './styles/listas.css';
+@import './styles/feedback.css';

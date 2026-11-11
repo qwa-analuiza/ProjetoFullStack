@@ -1,0 +1,89 @@
+<app-cabecalho-secao titulo="Compras" [contagem]="lista.length">
+  <button type="button" class="btn btn-primario btn-sm" (click)="abrirNova()"><app-icone nome="plus" /> Nova compra</button>
+</app-cabecalho-secao>
+
+@if (carregando) { <div class="esqueleto esqueleto-grande"></div> }
+@else if (lista.length === 0) {
+  <app-estado-vazio icone="basket" titulo="Nenhuma compra" texto="Crie um pedido de compra para um fornecedor." />
+} @else {
+  <div class="lista-cards">
+    @for (c of lista; track c.id) {
+      <article class="card compra">
+        <header>
+          <strong>#{{ c.id }} · {{ c.fornecedor }}</strong>
+          <span class="selo" [attr.data-s]="'C_' + c.status">{{ c.status | rotulo: 'compra' }}</span>
+        </header>
+        <small class="muted">{{ c.criadoEm | date: 'dd/MM/yyyy HH:mm' }}</small>
+        <ul class="itens-fila">
+          @for (i of c.itens; track i.id) {
+            <li>{{ i.quantidade | number: '1.0-3' }} {{ i.unidade }} de {{ i.ingrediente }} — {{ i.custoUnitario | currency: 'BRL' : 'symbol' : '1.2-4' }}</li>
+          }
+        </ul>
+        <footer>
+          <strong class="preco">{{ c.total | currency: 'BRL' }}</strong>
+          <div class="acoes">
+            @if (c.status === 'ABERTO' || c.status === 'ENVIADO') {
+              <button type="button" class="btn btn-fantasma btn-sm" (click)="cancelar(c)">Cancelar</button>
+            }
+            @if (c.status === 'ABERTO') {
+              <button type="button" class="btn btn-claro btn-sm" (click)="enviar(c)">Marcar enviada</button>
+            }
+            @if (c.status === 'ABERTO' || c.status === 'ENVIADO') {
+              <button type="button" class="btn btn-primario btn-sm" (click)="abrirRecebimento(c)">Receber</button>
+            }
+          </div>
+        </footer>
+      </article>
+    }
+  </div>
+}
+
+@if (modalNova) {
+  <app-modal titulo="Nova compra" (fechar)="modalNova = false">
+    <form (ngSubmit)="criar()" #f="ngForm">
+      <div class="campo"><label for="forn">Fornecedor</label>
+        <select id="forn" name="forn" required [(ngModel)]="fornecedorId">
+          <option [ngValue]="null" disabled>Selecione</option>
+          @for (fo of fornecedores; track fo.id) { <option [ngValue]="fo.id">{{ fo.nome }}</option> }
+        </select></div>
+
+      <span class="rotulo-grupo">Itens</span>
+      @for (l of linhas; track l; let n = $index) {
+        <div class="linha-form">
+          <select [name]="'ing' + n" required [ngModel]="l.ingredienteId" (ngModelChange)="escolher(l, $event)" aria-label="Ingrediente">
+            <option [ngValue]="null" disabled>Ingrediente</option>
+            @for (i of ingredientes; track i.id) { <option [ngValue]="i.id">{{ i.nome }} ({{ i.unidade }})</option> }
+          </select>
+          <input [name]="'qtd' + n" type="number" min="0.001" step="any" required placeholder="Qtd." [(ngModel)]="l.quantidade" aria-label="Quantidade">
+          <input [name]="'custo' + n" type="number" min="0" step="any" required placeholder="R$ unit." [(ngModel)]="l.custoUnitario" aria-label="Custo unitário">
+          <button type="button" class="btn-icone btn-icone-p" (click)="removerLinha(n)" [disabled]="linhas.length === 1" aria-label="Remover item"><app-icone nome="trash" /></button>
+        </div>
+      }
+      <button type="button" class="btn btn-fantasma btn-sm" (click)="adicionarLinha()"><app-icone nome="plus" /> Adicionar item</button>
+
+      <button type="submit" class="btn btn-primario btn-bloco espaco-topo" [disabled]="salvando || f.invalid">{{ salvando ? 'Salvando...' : 'Criar compra' }}</button>
+    </form>
+  </app-modal>
+}
+
+@if (modalReceber) {
+  <app-modal [titulo]="'Receber compra #' + comprando?.id" (fechar)="modalReceber = false">
+    <form (ngSubmit)="receber()" #g="ngForm">
+      <p class="muted espaco-baixo">Confira o que chegou. Os lotes entram no estoque e o custo dos ingredientes é atualizado.</p>
+      @for (r of recebimento; track r.itemId; let n = $index) {
+        <div class="bloco-receb">
+          <strong>{{ r.ingrediente }} ({{ r.unidade }})</strong>
+          <div class="grade-3">
+            <div class="campo"><label [for]="'rq' + n">Recebido</label>
+              <input [id]="'rq' + n" [name]="'rq' + n" type="number" min="0.001" step="any" required [(ngModel)]="r.quantidadeRecebida"></div>
+            <div class="campo"><label [for]="'rc' + n">Custo unit.</label>
+              <input [id]="'rc' + n" [name]="'rc' + n" type="number" min="0" step="any" required [(ngModel)]="r.custoUnitario"></div>
+            <div class="campo"><label [for]="'rv' + n">Validade</label>
+              <input [id]="'rv' + n" [name]="'rv' + n" type="date" [(ngModel)]="r.validade"></div>
+          </div>
+        </div>
+      }
+      <button type="submit" class="btn btn-primario btn-bloco" [disabled]="salvando || g.invalid">{{ salvando ? 'Salvando...' : 'Confirmar recebimento' }}</button>
+    </form>
+  </app-modal>
+}

@@ -1,0 +1,16 @@
+:host { display: block; }
+.cabecalho { display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; flex-wrap: wrap; margin-bottom: 8px; }
+.cabecalho .titulo-pagina { margin-bottom: 4px; }
+.colunas { display: grid; gap: 0 28px; grid-template-columns: 1fr; align-items: start; margin-top: 16px; }
+.card p { margin-bottom: 4px; }
+
+.linha-tempo { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; }
+.linha-tempo li { position: relative; display: flex; align-items: center; gap: 14px; padding: 10px 0; color: var(--tinta-2); }
+.linha-tempo li:not(:last-child)::after { content: ''; position: absolute; left: 13px; top: 38px; bottom: -10px; width: 2px; background: var(--borda-forte); }
+.marca { width: 28px; height: 28px; flex: none; border-radius: 50%; display: grid; place-items: center; border: 2px solid var(--borda-forte); background: var(--branco); font-size: .7rem; }
+.feita { color: var(--tinta); }
+.feita .marca { background: var(--ok); border-color: var(--ok); color: var(--branco); }
+.atual { color: var(--tinta); font-weight: 800; }
+.atual .marca { border-color: var(--ambar); background: var(--ambar); box-shadow: 0 0 0 6px rgba(232, 163, 23, .25); }
+
+@media (min-width: 900px) { .colunas { grid-template-columns: minmax(0, 1.5fr) minmax(300px, 1fr); } }

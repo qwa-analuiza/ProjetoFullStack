@@ -1,0 +1,7 @@
+<div class="foto">
+  @if (url && !falhou) {
+    <img [src]="url" [alt]="nome || ''" loading="lazy" (error)="falhou = true">
+  } @else {
+    <span class="vazia" aria-hidden="true"><app-icone nome="utensils" /></span>
+  }
+</div>

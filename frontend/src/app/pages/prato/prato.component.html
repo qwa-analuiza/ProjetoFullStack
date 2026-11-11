@@ -1,0 +1,40 @@
+<div class="container pagina-interna">
+  <a routerLink="/" fragment="cardapio" class="voltar"><app-icone nome="back" /> Cardápio</a>
+
+  @if (carregando) {
+    <div class="esqueleto esqueleto-grande"></div>
+  } @else if (!prato) {
+    <app-estado-vazio icone="search" titulo="Prato não encontrado" texto="Ele pode ter saído do cardápio.">
+      <a routerLink="/" fragment="cardapio" class="btn btn-primario">Ver cardápio</a>
+    </app-estado-vazio>
+  } @else {
+    <article class="detalhe">
+      <div class="foto"><app-foto [url]="prato.imagemUrl" [nome]="prato.nome" /></div>
+
+      <div class="info">
+        <span class="chip">{{ prato.categoria || 'Prato' }}</span>
+        <h1>{{ prato.nome }}</h1>
+        <p class="descricao">{{ prato.descricao || 'Preparado na hora, com ingredientes selecionados.' }}</p>
+        <strong class="preco preco-grande">{{ prato.preco | currency: 'BRL' }}</strong>
+
+        @if (!auth.funcionario()) {
+        <div class="campo">
+          <label for="obs">Alguma observação?</label>
+          <textarea id="obs" rows="2" maxlength="300" [(ngModel)]="observacao" placeholder="Ex.: sem cebola, molho à parte"></textarea>
+        </div>
+
+        <div class="acoes-prato">
+          <div class="stepper">
+            <button type="button" (click)="alterar(-1)" aria-label="Diminuir"><app-icone nome="minus" /></button>
+            <span>{{ quantidade }}</span>
+            <button type="button" (click)="alterar(1)" aria-label="Aumentar"><app-icone nome="plus" /></button>
+          </div>
+          <button type="button" class="btn btn-primario btn-bloco" (click)="adicionar()">
+            Adicionar · {{ prato.preco * quantidade | currency: 'BRL' }}
+          </button>
+        </div>
+        }
+      </div>
+    </article>
+  }
+</div>

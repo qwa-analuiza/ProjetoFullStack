@@ -1,0 +1,7 @@
+.alerta { padding: 14px 18px; border-radius: var(--raio-p); margin-bottom: 16px; display: flex; flex-direction: column; gap: 4px; font-size: .92rem; }
+.alerta-erro { background: var(--erro-bg); color: var(--erro); flex-direction: row; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
+.alerta-aviso { background: var(--aviso-bg); color: var(--aviso); }
+
+.esqueleto { aspect-ratio: 4 / 5; border-radius: var(--raio); background: linear-gradient(100deg, var(--creme-2) 30%, var(--papel) 50%, var(--creme-2) 70%) 0 0 / 200% 100%; animation: brilho 1.3s infinite linear; }
+.esqueleto-grande { aspect-ratio: auto; height: 240px; }
+@keyframes brilho { to { background-position: -200% 0; } }

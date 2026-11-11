@@ -1,0 +1,30 @@
+:host { display: block; }
+.cardapio { padding-block: clamp(48px, 8vw, 96px); }
+.cabecalho { display: flex; flex-direction: column; align-items: center; gap: 14px; text-align: center; margin-bottom: clamp(28px, 4vw, 44px); }
+h2 { font-size: var(--t-h2); letter-spacing: -.05em; max-width: 14ch; line-height: .98; }
+.cabecalho p { color: var(--tinta-2); max-width: 52ch; }
+
+.ferramentas { display: flex; flex-direction: column; gap: 14px; margin-bottom: 28px; }
+.pilulas { display: flex; gap: 8px; overflow-x: auto; padding: 4px 2px 8px; margin-inline: calc(var(--gutter) * -1); padding-inline: var(--gutter); scrollbar-width: none; }
+.pilulas::-webkit-scrollbar { display: none; }
+.pilula { flex: none; min-height: 46px; padding: 0 22px; border-radius: var(--raio-pilula); border: 1px solid var(--borda); background: var(--papel); color: var(--tinta); font-weight: 700; cursor: pointer; transition: background .15s, color .15s; }
+.pilula:hover { background: var(--branco); }
+.pilula.ativa { background: var(--tinta); color: var(--branco); border-color: var(--tinta); }
+.busca { display: flex; align-items: center; gap: 10px; padding: 0 18px; min-height: 50px; background: var(--papel); border: 1px solid var(--borda); border-radius: var(--raio-pilula); color: var(--tinta-2); }
+.busca:focus-within { border-color: var(--ambar); box-shadow: 0 0 0 4px rgba(232, 163, 23, .22); background: var(--branco); }
+.busca input { min-height: 0; padding: 0; border: 0; background: transparent; box-shadow: none; border-radius: 0; }
+.busca input:focus { box-shadow: none; background: transparent; }
+
+.grade { display: grid; gap: clamp(16px, 2.4vw, 28px); grid-template-columns: repeat(auto-fill, minmax(min(100%, 300px), 1fr)); }
+.esqueleto { aspect-ratio: 4 / 4.2; }
+.prato-gerenciavel { min-width: 0; }
+.acoes-cardapio { display: flex; gap: 8px; padding-top: 10px; }
+.pratos-inativos { margin-top: 40px; padding-top: 24px; border-top: 1px solid var(--borda); }
+.pratos-inativos h3 { margin-bottom: 12px; }
+.prato-inativo { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 12px 0; border-bottom: 1px solid var(--borda); }
+
+@media (min-width: 900px) {
+  .ferramentas { flex-direction: row; align-items: center; justify-content: space-between; }
+  .pilulas { margin-inline: 0; padding-inline: 2px; flex-wrap: wrap; overflow: visible; }
+  .busca { width: 340px; flex: none; }
+}

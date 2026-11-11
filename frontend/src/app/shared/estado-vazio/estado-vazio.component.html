@@ -1,0 +1,6 @@
+<div class="vazio">
+  <span class="icone-vazio"><app-icone [nome]="icone" /></span>
+  <h3>{{ titulo }}</h3>
+  @if (texto) { <p>{{ texto }}</p> }
+  <ng-content />
+</div>

@@ -1,0 +1,29 @@
+<header class="topo">
+  <div class="container linha-topo">
+    <app-logo />
+
+    <nav class="menu" aria-label="Principal">
+      <a routerLink="/" routerLinkActive="ativo" [routerLinkActiveOptions]="{ exact: true }">Início</a>
+      <a routerLink="/" fragment="cardapio">Cardápio</a>
+      @if (auth.logado() && !auth.funcionario()) { <a routerLink="/pedidos" routerLinkActive="ativo">Meus pedidos</a> }
+      @if (auth.funcionario()) { <a routerLink="/admin" routerLinkActive="ativo">{{ auth.rotuloPainel() }}</a> }
+    </nav>
+
+    <div class="acoes-topo">
+      @if (auth.logado()) {
+        <a routerLink="/perfil" class="perfil" aria-label="Meu perfil">
+          <span class="iniciais">{{ iniciais() }}</span>
+          <span class="perfil-texto">Meu perfil</span>
+        </a>
+      } @else {
+        <a routerLink="/login" class="btn btn-escuro btn-sm">Entrar</a>
+      }
+      @if (!auth.funcionario()) {
+        <a routerLink="/carrinho" class="carrinho" aria-label="Carrinho">
+          <app-icone nome="cart" />
+          @if (cart.quantidade() > 0) { <span class="badge">{{ cart.quantidade() }}</span> }
+        </a>
+      }
+    </div>
+  </div>
+</header>

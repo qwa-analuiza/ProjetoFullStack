@@ -1,0 +1,7 @@
+.logo { display: inline-flex; align-items: center; gap: 12px; color: var(--tinta); }
+.marca { display: grid; place-items: center; width: 44px; height: 44px; border-radius: 14px; background: var(--ambar); color: var(--tinta);
+  box-shadow: 0 8px 18px rgba(232, 163, 23, .35); font-size: 1.1rem; }
+.nome { font-family: var(--fonte-titulo); font-weight: 800; font-size: 1.2rem; letter-spacing: -.03em; }
+.nome b { color: var(--ambar-destaque); font-weight: 800; }
+.claro { color: var(--branco); }
+.claro .nome b { color: var(--ambar); }

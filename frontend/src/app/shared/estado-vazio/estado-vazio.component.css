@@ -1,0 +1,3 @@
+.vazio { text-align: center; padding: clamp(32px, 6vw, 56px) 20px; background: rgba(255, 255, 255, .55); border: 1px dashed var(--borda-forte); border-radius: var(--raio); display: flex; flex-direction: column; align-items: center; gap: 10px; }
+.icone-vazio { display: grid; place-items: center; width: 64px; height: 64px; border-radius: 50%; background: var(--ambar-suave); color: var(--ambar-texto); font-size: 1.5rem; }
+p { color: var(--tinta-2); max-width: 36ch; }

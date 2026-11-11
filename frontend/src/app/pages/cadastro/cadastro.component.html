@@ -1,0 +1,31 @@
+<app-auth-layout eyebrow="Primeira vez por aqui" titulo="Crie sua conta." subtitulo="Leva menos de um minuto.">
+  <form (ngSubmit)="cadastrar()" #f="ngForm">
+    <div class="campo">
+      <label for="nome">Nome completo</label>
+      <input id="nome" name="nome" required maxlength="120" autocomplete="name" [(ngModel)]="dados.nome">
+    </div>
+    <div class="campo">
+      <label for="email">E-mail</label>
+      <input id="email" name="email" type="email" required autocomplete="email" placeholder="voce@email.com" [(ngModel)]="dados.email">
+    </div>
+    <div class="campo">
+      <label for="senha">Senha</label>
+      <div class="campo-senha">
+        <input id="senha" name="senha" [type]="mostrar ? 'text' : 'password'" required minlength="6" maxlength="72" autocomplete="new-password" placeholder="Mínimo de 6 caracteres" [(ngModel)]="dados.senha">
+        <button type="button" class="mostrar" (click)="mostrar = !mostrar" [attr.aria-pressed]="mostrar">{{ mostrar ? 'Ocultar' : 'Mostrar' }}</button>
+      </div>
+    </div>
+    <div class="campo">
+      <label for="telefone">Telefone</label>
+      <input id="telefone" name="telefone" required maxlength="30" inputmode="tel" autocomplete="tel" placeholder="(00) 00000-0000" [(ngModel)]="dados.telefone">
+    </div>
+    <div class="campo">
+      <label for="endereco">Endereço de entrega</label>
+      <input id="endereco" name="endereco" required maxlength="300" autocomplete="street-address" placeholder="Rua, número, bairro" [(ngModel)]="dados.endereco">
+    </div>
+    <button type="submit" class="btn btn-escuro btn-bloco" [disabled]="enviando || f.invalid">
+      {{ enviando ? 'Criando...' : 'Criar conta' }}
+    </button>
+  </form>
+  <p class="rodape">Já tem conta? <a routerLink="/login" [queryParams]="rota.snapshot.queryParams">Entrar</a></p>
+</app-auth-layout>

@@ -1,0 +1,37 @@
+<app-cabecalho-secao titulo="Fornecedores" [contagem]="lista.length">
+  <button type="button" class="btn btn-primario btn-sm" (click)="novo()"><app-icone nome="plus" /> Novo</button>
+</app-cabecalho-secao>
+
+@if (carregando) { <div class="esqueleto esqueleto-grande"></div> }
+@else if (lista.length === 0) {
+  <app-estado-vazio icone="truck" titulo="Nenhum fornecedor" texto="Cadastre quem abastece sua cozinha." />
+} @else {
+  <div class="lista-cards">
+    @for (f of lista; track f.id) {
+      <div class="card linha">
+        <div class="linha-info">
+          <strong>{{ f.nome }}</strong>
+          <small class="muted">{{ detalhe(f) }}</small>
+        </div>
+        <div class="acoes">
+          <button type="button" class="btn-icone btn-icone-p" (click)="editar(f)" aria-label="Editar"><app-icone nome="edit" /></button>
+          <button type="button" class="btn-icone btn-icone-p" (click)="desativar(f)" aria-label="Desativar"><app-icone nome="trash" /></button>
+        </div>
+      </div>
+    }
+  </div>
+}
+
+@if (modal) {
+  <app-modal [titulo]="editandoId ? 'Editar fornecedor' : 'Novo fornecedor'" (fechar)="modal = false">
+    <form (ngSubmit)="salvar()" #f="ngForm">
+      <div class="campo"><label for="nome">Nome</label><input id="nome" name="nome" required maxlength="255" [(ngModel)]="form.nome"></div>
+      <div class="grade-2">
+        <div class="campo"><label for="cnpj">CNPJ</label><input id="cnpj" name="cnpj" maxlength="20" [(ngModel)]="form.cnpj"></div>
+        <div class="campo"><label for="telefone">Telefone</label><input id="telefone" name="telefone" maxlength="30" [(ngModel)]="form.telefone"></div>
+      </div>
+      <div class="campo"><label for="email">E-mail</label><input id="email" name="email" type="email" maxlength="255" [(ngModel)]="form.email"></div>
+      <button type="submit" class="btn btn-primario btn-bloco" [disabled]="salvando || f.invalid">{{ salvando ? 'Salvando...' : 'Salvar' }}</button>
+    </form>
+  </app-modal>
+}

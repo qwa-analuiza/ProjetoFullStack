@@ -1,0 +1,12 @@
+.card { background: var(--branco); border: 1px solid var(--borda); border-radius: var(--raio); box-shadow: var(--sombra); padding: clamp(16px, 2.4vw, 24px); margin-bottom: 16px; }
+.card > h3 { margin-bottom: 14px; }
+.chip { display: inline-block; padding: 5px 14px; border-radius: var(--raio-pilula); background: var(--ambar-suave); color: var(--ambar-texto); font-size: .72rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; }
+.selo { display: inline-block; padding: 4px 12px; border-radius: var(--raio-pilula); font-size: .78rem; font-weight: 700; background: var(--creme); color: var(--tinta); white-space: nowrap; }
+.selo-g { font-size: .9rem; padding: 7px 16px; }
+.selo[data-s='RECEBIDO'], .selo[data-s='C_ABERTO'] { background: var(--aviso-bg); color: var(--aviso); }
+.selo[data-s='CONFIRMADO'], .selo[data-s='EM_PREPARO'], .selo[data-s='C_ENVIADO'] { background: #FBE0A8; color: var(--ambar-texto); }
+.selo[data-s='PRONTO'], .selo[data-s='SAIU_PARA_ENTREGA'] { background: #E6E0CF; color: var(--tinta); }
+.selo[data-s='ENTREGUE'], .selo[data-s='C_RECEBIDO'] { background: var(--ok-bg); color: var(--ok); }
+.selo[data-s='CANCELADO'], .selo[data-s='C_CANCELADO'] { background: var(--erro-bg); color: var(--erro); }
+
+.preco { color: var(--ambar-texto); font-family: var(--fonte-titulo); font-weight: 800; letter-spacing: -.02em; }

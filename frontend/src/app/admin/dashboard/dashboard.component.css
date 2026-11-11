@@ -1,0 +1,20 @@
+:host { display: block; }
+.indicadores { display: grid; gap: 12px; grid-template-columns: 1fr 1fr; margin-bottom: 16px; }
+.indicador { margin: 0; display: flex; flex-direction: column; gap: 6px; border-radius: var(--raio-g); }
+.indicador small { color: var(--tinta-2); font-weight: 600; }
+.indicador strong { font-family: var(--fonte-titulo); font-size: clamp(1.3rem, 1rem + 1.4vw, 2rem); letter-spacing: -.04em; overflow-wrap: anywhere; }
+.indicador.destaque { background: var(--ambar); border-color: var(--ambar); }
+.indicador.destaque small { color: var(--tinta); }
+.blocos { display: grid; gap: 16px; grid-template-columns: 1fr; align-items: start; }
+@media (min-width: 700px) { .indicadores { grid-template-columns: repeat(4, 1fr); } }
+@media (min-width: 900px) { .blocos { grid-template-columns: repeat(3, 1fr); } }
+
+.passos { border-radius: var(--raio-g); }
+.passos ol { list-style: none; margin: 0; padding: 0; display: grid; gap: 14px; }
+.passos li { display: flex; align-items: flex-start; gap: 14px; }
+.passos li div { display: flex; flex-direction: column; gap: 2px; }
+.passos a { font-weight: 800; color: var(--tinta); }
+.passos a:hover { color: var(--ambar-texto); }
+.passos .marca { flex: none; width: 28px; height: 28px; border-radius: 50%; display: grid; place-items: center; border: 2px solid var(--borda-forte); background: var(--branco); font-size: .7rem; }
+.passos li.feito .marca { background: var(--ok); border-color: var(--ok); color: var(--branco); }
+.passos li.feito a { color: var(--tinta-2); text-decoration: line-through; }

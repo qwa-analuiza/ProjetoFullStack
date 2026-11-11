@@ -1,0 +1,35 @@
+.campo { display: flex; flex-direction: column; gap: 8px; margin-bottom: 16px; }
+.campo label, .rotulo-grupo { font-weight: 700; font-size: .88rem; color: var(--tinta); }
+.rotulo-grupo { display: block; margin: 8px 0 10px; }
+input, select, textarea {
+  width: 100%; min-height: 52px; padding: 12px 18px; font: inherit; color: var(--tinta);
+  background: var(--papel); border: 1px solid var(--borda); border-radius: var(--raio-campo); outline: none;
+  transition: border-color .15s, box-shadow .15s, background .15s;
+}
+input::placeholder, textarea::placeholder { color: #8C8474; }
+textarea { resize: vertical; min-height: 84px; }
+input:focus, select:focus, textarea:focus { border-color: var(--ambar); background: var(--branco); box-shadow: 0 0 0 4px rgba(232, 163, 23, .22); }
+input.ng-invalid.ng-touched, select.ng-invalid.ng-touched { border-color: var(--erro); }
+input[type='checkbox'] { width: 20px; min-height: 20px; accent-color: var(--ambar); }
+.check { display: flex; align-items: center; gap: 10px; margin: 4px 0 16px; font-weight: 500; }
+
+.campo-senha { position: relative; }
+.campo-senha input { padding-right: 96px; }
+.campo-senha .mostrar { position: absolute; top: 50%; right: 8px; transform: translateY(-50%); min-height: 38px; padding: 0 14px; border: 0; border-radius: var(--raio-pilula); background: transparent; color: var(--ambar-texto); font-weight: 700; font-size: .85rem; cursor: pointer; }
+.campo-senha .mostrar:hover { background: var(--ambar-suave); }
+
+.grade-2, .grade-3 { display: grid; gap: 0 14px; grid-template-columns: 1fr; }
+@media (min-width: 560px) { .grade-2 { grid-template-columns: 1fr 1fr; } .grade-3 { grid-template-columns: 1fr 1fr 1fr; } }
+
+.linha-form { display: grid; grid-template-columns: 1fr 1fr 38px; gap: 8px; margin-bottom: 10px; align-items: center; }
+.linha-form > :first-child { grid-column: 1 / -2; }
+.linha-form-2 { grid-template-columns: 1fr 38px; }
+.linha-form-2 > :first-child { grid-column: auto; }
+@media (min-width: 560px) {
+  .linha-form { grid-template-columns: 1fr 100px 120px 38px; }
+  .linha-form > :first-child { grid-column: auto; }
+  .linha-form-2 { grid-template-columns: 1fr 130px 38px; }
+}
+.bloco-receb { padding: 14px; margin-bottom: 12px; background: var(--creme); border-radius: var(--raio-p); }
+.bloco-receb .campo { margin-bottom: 0; }
+.bloco-receb strong { display: block; margin-bottom: 10px; }

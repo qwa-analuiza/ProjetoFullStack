@@ -1,0 +1,85 @@
+<div class="resumo" aria-label="Resumo das entregas">
+  <div><strong>{{ disponiveis.length }}</strong><span>Prontos para retirar</span></div>
+  <div><strong>{{ emRota.length }}</strong><span>Em rota</span></div>
+  <div><strong>{{ entreguesHoje.length }}</strong><span>Entregues hoje</span></div>
+</div>
+
+@if (carregando) {
+  <div class="esqueleto esqueleto-grande"></div>
+} @else {
+  <h3 class="subtitulo">Em rota</h3>
+  @if (emRota.length === 0) {
+    <app-estado-vazio icone="truck" titulo="Nenhuma entrega em rota" texto="Retire um pedido pronto aqui embaixo para começar." />
+  } @else {
+    <div class="grade">
+      @for (p of emRota; track p.id) {
+        <article class="card pedido">
+          <header>
+            <strong>#{{ p.id }} · {{ p.cliente }}</strong>
+            <span class="selo" [attr.data-s]="p.status">{{ p.status | rotulo: 'status' }}</span>
+          </header>
+          <p class="endereco">{{ p.enderecoEntrega }}</p>
+          <small class="muted">{{ p.telefoneContato }} · {{ p.formaPagamento | rotulo: 'pagamento' }} · {{ p.pagamentoAprovado ? 'pago' : 'pagamento pendente' }}</small>
+          <ul class="itens-fila">
+            @for (i of p.itens; track $index) {
+              <li><strong>{{ i.quantidade }}×</strong> {{ i.prato }}</li>
+            }
+          </ul>
+          <div class="atalhos">
+            <a class="btn btn-claro btn-sm" [href]="linkMapa(p)" target="_blank" rel="noopener"><app-icone nome="pin" /> Abrir no mapa</a>
+            <a class="btn btn-claro btn-sm" [href]="linkTelefone(p)"><app-icone nome="user" /> Ligar</a>
+          </div>
+          <footer>
+            <strong class="preco">{{ p.total | currency: 'BRL' }}</strong>
+            <button type="button" class="btn btn-primario btn-sm" [disabled]="ocupado === p.id" (click)="entregar(p)">
+              <app-icone nome="check" /> Marcar entregue
+            </button>
+          </footer>
+        </article>
+      }
+    </div>
+  }
+
+  <h3 class="subtitulo">Prontos para retirar</h3>
+  @if (disponiveis.length === 0) {
+    <app-estado-vazio icone="chef" titulo="Nenhum pedido pronto agora" texto="Assim que a cozinha marcar um pedido como pronto, ele aparece aqui. A lista atualiza sozinha a cada 15 segundos." />
+  } @else {
+    <div class="grade">
+      @for (p of disponiveis; track p.id) {
+        <article class="card pedido">
+          <header>
+            <strong>#{{ p.id }} · {{ p.cliente }}</strong>
+            <small class="muted">pronto desde {{ p.atualizadoEm | date: 'HH:mm' }}</small>
+          </header>
+          <p class="endereco">{{ p.enderecoEntrega }}</p>
+          <ul class="itens-fila">
+            @for (i of p.itens; track $index) {
+              <li><strong>{{ i.quantidade }}×</strong> {{ i.prato }}</li>
+            }
+          </ul>
+          <footer>
+            <strong class="preco">{{ p.total | currency: 'BRL' }}</strong>
+            <button type="button" class="btn btn-primario btn-sm" [disabled]="ocupado === p.id" (click)="retirar(p)">
+              <app-icone nome="truck" /> Retirar para entrega
+            </button>
+          </footer>
+        </article>
+      }
+    </div>
+  }
+
+  @if (entreguesHoje.length > 0) {
+    <h3 class="subtitulo">Entregues hoje</h3>
+    <div class="lista-cards">
+      @for (p of entreguesHoje; track p.id) {
+        <div class="card linha">
+          <div class="linha-info">
+            <strong>#{{ p.id }} · {{ p.cliente }}</strong>
+            <small class="muted">{{ p.enderecoEntrega }} · {{ p.atualizadoEm | date: 'HH:mm' }}</small>
+          </div>
+          <span class="selo" data-s="ENTREGUE">Entregue</span>
+        </div>
+      }
+    </div>
+  }
+}

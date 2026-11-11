@@ -1,0 +1,15 @@
+:host { display: block; }
+.detalhe { display: grid; gap: clamp(20px, 4vw, 48px); grid-template-columns: 1fr; align-items: start; }
+.foto { aspect-ratio: 4 / 3; overflow: hidden; border-radius: clamp(48px, 10vw, 96px) var(--raio-g) var(--raio-g) var(--raio-g); box-shadow: var(--sombra-g); }
+.info { display: flex; flex-direction: column; align-items: flex-start; gap: 14px; padding-block: 4px; }
+h1 { font-size: var(--t-h1); letter-spacing: -.05em; line-height: .98; }
+.descricao { color: var(--tinta-2); font-size: 1.05rem; max-width: 52ch; }
+.preco-grande { font-size: 2.2rem; color: var(--ambar-destaque); }
+.campo { width: 100%; margin: 8px 0 0; }
+.acoes-prato { display: flex; align-items: center; gap: 12px; width: 100%; flex-wrap: wrap; }
+.acoes-prato .btn { flex: 1; min-width: 200px; }
+@media (min-width: 900px) {
+  .detalhe { grid-template-columns: 1.1fr 1fr; }
+  .foto { aspect-ratio: 1 / 1; }
+  .info { max-width: 520px; }
+}

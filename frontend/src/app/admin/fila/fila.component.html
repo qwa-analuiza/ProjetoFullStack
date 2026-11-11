@@ -1,0 +1,50 @@
+<div class="resumo-cozinha" aria-label="Resumo de pratos por etapa">
+  <div><strong>{{ porcoesAguardandoCozinha }}</strong><span>Aguardando cozinha</span></div>
+  <div><strong>{{ porcoesNaCozinha }}</strong><span>Na cozinha</span></div>
+  <div><strong>{{ porcoesProntas }}</strong><span>Prontos</span></div>
+</div>
+
+<div class="filtros" role="group" aria-label="Filtrar pedidos">
+  @for (f of filtrosVisiveis; track f.valor) {
+    <button type="button" class="pilula" [class.ativa]="filtro === f.valor" (click)="filtrar(f.valor)">{{ f.rotulo }}</button>
+  }
+</div>
+
+@if (carregando) {
+  <div class="esqueleto esqueleto-grande"></div>
+} @else if (pedidos.length === 0) {
+  <app-estado-vazio icone="chef" titulo="Nenhum pedido aqui" texto="A lista atualiza sozinha a cada 15 segundos." />
+} @else {
+  <div class="grade-fila">
+    @for (p of pedidos; track p.id) {
+      <article class="card pedido">
+        <header>
+          <strong>#{{ p.id }} · {{ p.cliente }}</strong>
+          <span class="selo" [attr.data-s]="p.status">{{ p.status | rotulo: 'status' }}</span>
+        </header>
+        <small class="muted">{{ p.criadoEm | date: 'dd/MM HH:mm' }} · {{ p.formaPagamento | rotulo: 'pagamento' }}</small>
+        <ul class="itens-fila">
+          @for (i of p.itens; track $index) {
+            <li><strong>{{ i.quantidade }}×</strong> {{ i.prato }}
+              @if (i.observacao) { <small class="muted"> — {{ i.observacao }}</small> }
+              <span class="estado-cozinha" [attr.data-situacao]="situacaoCozinha(p.status).classe">{{ situacaoCozinha(p.status).texto }}</span>
+            </li>
+          }
+        </ul>
+        <small class="muted">{{ p.enderecoEntrega }} · {{ p.telefoneContato }}</small>
+        @if (p.entregador) { <small class="muted">Motoboy: {{ p.entregador }}</small> }
+        <footer>
+          <strong class="preco">{{ p.total | currency: 'BRL' }}</strong>
+          <div class="acoes">
+            @if (p.status === 'RECEBIDO' && !cozinheiro) {
+              <button type="button" class="btn btn-fantasma btn-sm" [disabled]="ocupado === p.id" (click)="mudar(p, 'CANCELADO')">Cancelar</button>
+            }
+            @if (proximo(p); as prox) {
+              <button type="button" class="btn btn-primario btn-sm" [disabled]="ocupado === p.id" (click)="mudar(p, prox.status)">{{ prox.rotulo }}</button>
+            }
+          </div>
+        </footer>
+      </article>
+    }
+  </div>
+}

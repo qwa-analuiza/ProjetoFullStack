@@ -1,0 +1,10 @@
+.fundo { position: fixed; z-index: 90; inset: 0; background: rgba(27, 27, 21, .55); display: flex; align-items: flex-end; justify-content: center; }
+.modal { width: 100%; max-width: 600px; max-height: 92vh; overflow: auto; background: var(--creme); border-radius: var(--raio-g) var(--raio-g) 0 0; box-shadow: var(--sombra-g); animation: sobe .25s ease; }
+.topo { position: sticky; top: 0; z-index: 1; display: flex; align-items: center; justify-content: space-between; padding: 18px 22px; background: var(--creme); border-bottom: 1px solid var(--borda); }
+.topo h3 { font-size: 1.3rem; }
+.corpo { padding: 20px 22px calc(28px + env(safe-area-inset-bottom)); }
+@keyframes sobe { from { opacity: 0; transform: translateY(16px); } }
+@media (min-width: 900px) {
+  .fundo { align-items: center; padding: 24px; }
+  .modal { border-radius: var(--raio-g); }
+}

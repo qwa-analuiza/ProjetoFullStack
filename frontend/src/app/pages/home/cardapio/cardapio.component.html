@@ -1,0 +1,107 @@
+<section class="cardapio" id="cardapio">
+  <div class="container">
+    <header class="cabecalho">
+      <span class="eyebrow">Nosso cardápio</span>
+      <h2>Um cardápio feito para pedir.</h2>
+      <p>Pratos preparados na hora, com ingredientes frescos. Escolha, adicione ao carrinho e finalize em poucos toques.</p>
+      @if (podeEditar) {
+        <button type="button" class="btn btn-primario btn-sm" (click)="novo()" [disabled]="carregandoAdmin">
+          <app-icone nome="plus" /> Cadastrar prato
+        </button>
+      }
+    </header>
+
+    <div class="ferramentas">
+      <div class="pilulas" role="group" aria-label="Categorias">
+        <button type="button" class="pilula" [class.ativa]="categoria === ''" (click)="categoria = ''">Todos</button>
+        @for (c of categorias; track c) {
+          <button type="button" class="pilula" [class.ativa]="categoria === c" (click)="categoria = c">{{ c }}</button>
+        }
+      </div>
+      <label class="busca">
+        <app-icone nome="search" />
+        <input type="search" placeholder="Buscar no cardápio" [(ngModel)]="busca" aria-label="Buscar no cardápio">
+      </label>
+    </div>
+
+    @if (carregando) {
+      <div class="grade">
+        @for (n of [1, 2, 3]; track n) { <div class="esqueleto"></div> }
+      </div>
+    } @else if (erro) {
+      <div class="alerta alerta-erro">
+        {{ erro }} <button type="button" class="btn btn-claro btn-sm" (click)="recarregar.emit()">Tentar de novo</button>
+      </div>
+    } @else if (filtrados.length === 0) {
+      <app-estado-vazio icone="utensils" titulo="Nenhum prato encontrado"
+        [texto]="pratos.length === 0 ? 'O cardápio ainda não tem pratos cadastrados.' : 'Tente outra busca ou categoria.'" />
+    } @else {
+      <div class="grade">
+        @for (p of filtrados; track p.id) {
+          <div class="prato-gerenciavel">
+            <app-prato-card [prato]="p" />
+            @if (podeEditar) {
+              <div class="acoes-cardapio">
+                <button type="button" class="btn btn-claro btn-sm" (click)="editarPorId(p.id)"
+                  [disabled]="carregandoAdmin || !temPratoAdmin(p.id)" [attr.aria-label]="'Editar ' + p.nome">
+                  <app-icone nome="edit" /> Editar
+                </button>
+                <button type="button" class="btn btn-perigo btn-sm" (click)="excluirPorId(p.id)"
+                  [disabled]="carregandoAdmin || !temPratoAdmin(p.id)" [attr.aria-label]="'Excluir ' + p.nome + ' do cardápio'">
+                  <app-icone nome="trash" /> Excluir
+                </button>
+              </div>
+            }
+          </div>
+        }
+      </div>
+    }
+
+    @if (podeEditar && inativos.length > 0) {
+      <section class="pratos-inativos" aria-labelledby="inativos-titulo">
+        <h3 id="inativos-titulo">Pratos fora do cardápio</h3>
+        @for (p of inativos; track p.id) {
+          <div class="prato-inativo">
+            <span>{{ p.nome }}</span>
+            <button type="button" class="btn btn-claro btn-sm" (click)="editar(p)" [disabled]="carregandoAdmin">
+              <app-icone nome="edit" /> Editar / reativar
+            </button>
+          </div>
+        }
+      </section>
+    }
+  </div>
+
+  @if (modal) {
+    <app-modal [titulo]="editandoId ? 'Editar prato' : 'Cadastrar prato'" (fechar)="modal = false">
+      <form (ngSubmit)="salvar()" #f="ngForm">
+        <div class="campo"><label for="prato-nome">Nome</label><input id="prato-nome" name="nome" required maxlength="255" [(ngModel)]="form.nome"></div>
+        <div class="campo"><label for="prato-desc">Descrição</label><textarea id="prato-desc" name="desc" rows="2" maxlength="1000" [(ngModel)]="form.descricao"></textarea></div>
+        <div class="grade-2">
+          <div class="campo"><label for="prato-cat">Categoria</label><input id="prato-cat" name="cat" maxlength="100" [(ngModel)]="form.categoria" placeholder="Ex.: Burritos"></div>
+          <div class="campo"><label for="prato-preco">Preço (R$)</label><input id="prato-preco" name="preco" type="number" min="0.01" step="0.01" required [(ngModel)]="form.preco"></div>
+        </div>
+        <div class="campo"><label for="prato-img">URL da foto</label><input id="prato-img" name="img" maxlength="500" [(ngModel)]="form.imagemUrl" placeholder="https://..."></div>
+        <label class="check"><input type="checkbox" name="ativo" [(ngModel)]="form.ativo"> Aparece no cardápio</label>
+
+        <span class="rotulo-grupo">Ficha técnica (por porção)</span>
+        <small class="muted">Preencha uma quantidade para cada ingrediente. Um ingrediente deve aparecer apenas uma vez.</small>
+        @for (linha of ficha; track linha; let n = $index) {
+          <div class="linha-form linha-form-2">
+            <select [name]="'fi' + n" required [(ngModel)]="linha.ingredienteId" aria-label="Ingrediente">
+              <option [ngValue]="null" disabled>Ingrediente</option>
+              @for (i of ingredientesDisponiveis(n); track i.id) { <option [ngValue]="i.id">{{ i.nome }} ({{ i.unidade }})</option> }
+            </select>
+            <input [name]="'fq' + n" type="number" min="0.0001" step="any" required placeholder="Quantidade" [(ngModel)]="linha.quantidade" aria-label="Quantidade">
+            <button type="button" class="btn-icone btn-icone-p" (click)="removerLinha(n)" [disabled]="ficha.length === 1" aria-label="Remover ingrediente"><app-icone nome="trash" /></button>
+          </div>
+        }
+        <button type="button" class="btn btn-fantasma btn-sm" (click)="adicionarLinha()"><app-icone nome="plus" /> Adicionar ingrediente</button>
+
+        <button type="submit" class="btn btn-primario btn-bloco espaco-topo" [disabled]="salvando || f.invalid">
+          {{ salvando ? 'Salvando...' : 'Salvar prato' }}
+        </button>
+      </form>
+    </app-modal>
+  }
+</section>

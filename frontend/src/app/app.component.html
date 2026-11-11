@@ -1,0 +1,7 @@
+@if (!telaAuth()) { <app-cabecalho /> }
+<main><router-outlet /></main>
+@if (!telaAuth()) {
+  <app-rodape />
+  <app-nav-inferior />
+}
+<app-toast />

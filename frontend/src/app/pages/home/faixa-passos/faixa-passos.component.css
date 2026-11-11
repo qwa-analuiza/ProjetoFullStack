@@ -1,0 +1,7 @@
+:host { display: block; }
+.faixa { background: #FFF9EC; border-block: 1px solid var(--borda); }
+.passos { list-style: none; margin-block: 0; padding-block: 22px; display: grid; gap: 18px 16px; grid-template-columns: 1fr 1fr; }
+li { display: flex; align-items: center; gap: 12px; }
+.numero { font-family: var(--fonte-titulo); font-weight: 800; font-size: clamp(1.4rem, 1rem + 1.4vw, 1.9rem); letter-spacing: -.04em; color: var(--ambar-destaque); line-height: 1; }
+.titulo { font-weight: 700; font-size: .9rem; line-height: 1.25; max-width: 14ch; }
+@media (min-width: 760px) { .passos { grid-template-columns: repeat(4, 1fr); padding-block: 28px; } .titulo { font-size: .95rem; } }

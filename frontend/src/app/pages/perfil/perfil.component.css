@@ -1,0 +1,6 @@
+:host { display: block; }
+.caixa { max-width: 520px; display: flex; flex-direction: column; gap: 4px; }
+.topo { display: flex; align-items: center; gap: 16px; border-radius: var(--raio-g); }
+.avatar { width: 60px; height: 60px; border-radius: 50%; display: grid; place-items: center; background: var(--ambar); color: var(--tinta); font-family: var(--fonte-titulo); font-size: 1.5rem; font-weight: 800; }
+.topo h3 { margin-bottom: 6px; font-size: 1.25rem; }
+.botoes { display: grid; gap: 10px; margin-top: 8px; }

@@ -1,0 +1,19 @@
+<app-auth-layout eyebrow="Bem-vindo de volta" titulo="Entre na sua conta." subtitulo="Acesse seus pedidos e acompanhe a entrega.">
+  <form (ngSubmit)="entrar()" #f="ngForm">
+    <div class="campo">
+      <label for="email">E-mail</label>
+      <input id="email" name="email" type="email" required autocomplete="email" placeholder="voce@email.com" [(ngModel)]="email">
+    </div>
+    <div class="campo">
+      <label for="senha">Senha</label>
+      <div class="campo-senha">
+        <input id="senha" name="senha" [type]="mostrar ? 'text' : 'password'" required autocomplete="current-password" placeholder="Sua senha" [(ngModel)]="senha">
+        <button type="button" class="mostrar" (click)="mostrar = !mostrar" [attr.aria-pressed]="mostrar">{{ mostrar ? 'Ocultar' : 'Mostrar' }}</button>
+      </div>
+    </div>
+    <button type="submit" class="btn btn-escuro btn-bloco" [disabled]="enviando || f.invalid">
+      {{ enviando ? 'Entrando...' : 'Entrar na conta' }}
+    </button>
+  </form>
+  <p class="rodape">Ainda não tem uma conta? <a routerLink="/cadastro" [queryParams]="rota.snapshot.queryParams">Cadastre-se</a></p>
+</app-auth-layout>
